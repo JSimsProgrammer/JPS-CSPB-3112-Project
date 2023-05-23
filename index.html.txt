@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: #4B0082;
+                color: white;
+                font-family: Arial, sans-serif;
+            }
+
+            #header {
+                text-align: center;
+                padding-top: 50px;
+                font-size: 2em;
+            }
+
+            #introduction {
+                margin: auto;
+                width: 80%;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="header">Jordan Sims 3112 Web Page</div>
+        <div id="introduction">
+            <h2>Introduction</h2>
+            <!-- Write your introduction here -->
+        </div>
+    </body>
+</html>
