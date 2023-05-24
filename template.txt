@@ -66,6 +66,8 @@
             <a href="WIP.html">Week 10</a>
             <a href="WIP.html">Week 11</a>
             <a href="WIP.html">Week 12</a>
+            <a href="WIP.html">Final Project</a>
+            <a href="WIP.html">Acknowledgements</a>
             <!-- Add more navigation links here -->
         </nav>
     
@@ -76,7 +78,22 @@
         </div>
 
         <div id="PageText">
-		 <!-- Put Week 1 Text Here -->
+            <h3>Key Takeaways</h3>
+
+            <p>
+
+            </p>
+
+            
+            <h3>Project Update</h3>
+            
+            <p>
+                Below is this weeks prompt:
+            </p>
+
+            <p>
+                
+            </p>
            
         </div>
     </body>
