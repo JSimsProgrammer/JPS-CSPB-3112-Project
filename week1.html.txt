@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body {
+                background-color: #4B0082;
+                color: white;
+                font-family: Arial, sans-serif;
+            }
+
+            #header {
+                text-align: center;
+                padding-top: 50px;
+                font-size: 2em;
+            }
+            
+            #header2 {
+                text-align: center;
+                padding-top: 50px;
+                font-size: 1em;
+            }
+
+            #PageHeader {
+            	text-align: center;
+                margin: auto;
+                width: 80%;
+                padding: 10px;
+            }
+            
+            #PageText {
+                margin: auto;
+                width: 80%;
+                padding: 10px;
+            }
+            
+            nav {
+                background-color: #800080;
+                padding: 20px;
+                position: sticky;
+                top: 0;
+                width: 100%;
+            }
+
+            nav a {
+                color: white;
+                margin-right: 15px;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+    
+    	<nav>
+            <a href="#introduction">Introduction</a>
+            <a href="week1.html">Week 1</a>
+            <!-- Add more navigation links here -->
+        </nav>
+    
+        <div id="header">Nature of Code - Learning Processing and p5.js</div>
+         <div id="header2">CSPB 3112 Project by Jordan Sims</div>
+        <div id="PageHeader">
+            <h2>Week 1</h2>
+        </div>
+
+        <div id="PageText">
+		 <!-- Put Week 1 Text Here -->
+           
+        </div>
+    </body>
+</html>
