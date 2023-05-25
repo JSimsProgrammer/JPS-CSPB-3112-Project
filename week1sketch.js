@@ -4,9 +4,20 @@ class PVector {
     this.y = y_;
   }
 
-  add(v) {
-    this.y = this.y + v.y;
+  addX(v) {
     this.x = this.x + v.x;
+  }
+
+  subX(v) {
+    this.x = this.x - v.x;
+  }
+
+  addY(v) {
+    this.y = this.y + v.y;
+  }
+
+  subY(v) {
+    this.y = this.y - v.y;
   }
 }
 
@@ -17,10 +28,27 @@ function setup() {
   createCanvas(400, 400);
 }
 
+
 function draw() {
   background(0);
-  locationVar.add(velocityVar);
+
+  circleRandX = Math.floor(random(1, 100));
+  circleRandY = Math.floor(random(1, 100));
+  console.log(circleRandX)
+
+
+  if (circleRandX % 2 == 0) {
+    locationVar.addX(velocityVar);
+  } else {
+    locationVar.subX(velocityVar);
+  }
   
+  if (circleRandY % 2 == 0) {
+    locationVar.addY(velocityVar);
+  } else {
+    locationVar.subY(velocityVar);
+  }
+
   if ((locationVar.x > width-8) || (locationVar.x < 0+8)) {
     velocityVar.x = velocityVar.x * -1;
   }
@@ -28,8 +56,10 @@ function draw() {
     velocityVar.y = velocityVar.y * -1;
   }
 
+
+
   stroke(255);
   fill(175);
-  ellipse(locationVar.x,locationVar.y,16,16);
+  ellipse(locationVar.x,locationVar.y,30,30);
 
 }
