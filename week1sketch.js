@@ -59,5 +59,3 @@ function draw() {
   fill(175); // Set the fill color to a light gray
   ellipse(locationVar.x, locationVar.y, 30, 30); // Draw an ellipse at the current location with a diameter of 30 pixels
 }
-
-//Test
