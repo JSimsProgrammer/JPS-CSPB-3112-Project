@@ -1,5 +1,5 @@
-let counter = 0; //Counter for limiting movement speed on cirlce
-let circleSpeed = 5;
+let counter = 0;
+let circleSpeed = 3;
 let sizeVar = 400; //Size of the canver
 
 
@@ -69,6 +69,38 @@ class PVector {
     this.y = this.y + v.y;
     this.x = this.x + v.x;
   }
+
+  randPosXVect(){
+    this.x = Math.floor(random(1, 15))
+  }
+
+  randPosYVect(){
+    this.y = Math.floor(random(1, 15))
+  }
+
+  randNegXVect(){
+    this.x = Math.floor(random(-15, -1))
+  }
+
+  randNegYVect(){
+    this.y = Math.floor(random(-15, -1))
+  }
+
+  resetPosition() {
+    if (this.x > sizeVar + 30) {
+      this.x = sizeVar/2;
+    }
+    if (this.x < -30) {
+      this.x = sizeVar/2;
+    }
+    if (this.y > sizeVar +30) {
+      this.y = sizeVar/2;
+    }
+    if (this.y < -30) {
+      this.y = sizeVar/2;
+    }
+  }
+
 }
 
 let bounceLocationVar = new PVector(100,100);
@@ -81,12 +113,30 @@ function setup() {
 }
 
 function draw() {
-
-  counter += 1;
-
   background(0); // Set the background color to black
 
-  console.log(circle.x)
+  bounceLocationVar.add(bounceVelocityVar);
+  
+  if ((bounceLocationVar.x > width-8) || (bounceLocationVar.x < 0+8)) {
+    bounceVelocityVar.x = bounceVelocityVar.x * -1;
+    if(bounceVelocityVar.x > 0){
+      bounceVelocityVar.randPosXVect()
+    } else { 
+      bounceVelocityVar.randNegXVect()
+    }
+    
+  }
+  if ((bounceLocationVar.y > height-8) || (bounceLocationVar.y < 0+8)) {
+    bounceVelocityVar.y = bounceVelocityVar.y * -1;
+    if(bounceVelocityVar.y > 0){
+      bounceVelocityVar.randPosYVect()
+    } else { 
+      bounceVelocityVar.randNegYVect()
+    }
+  }
+
+  bounceLocationVar.resetPosition()
+
 
   if(counter % 5 == 0) {
     circleRandX = Math.floor(random(1, 100));
@@ -113,6 +163,11 @@ function draw() {
   stroke(255); // Set the stroke color to white
   fill(34, 139, 34); // Set the fill color to a light gray
   ellipse(timidCircle.x, timidCircle.y, 30, 30); // Draw an ellipse at the current location with a diameter of 30 pixels
+
+  stroke(255);
+  fill(0, 0, 255);
+  ellipse(bounceLocationVar.x,bounceLocationVar.y,16,16);
+
 }
 
 //Next steps are create another circle and have it bounce around the canvas. But give it a few things. Make it change its velocity vector
