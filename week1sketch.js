@@ -3,7 +3,7 @@ let circleSpeed = 5;
 let sizeVar = 400; //Size of the canver
 
 
-class PVector {
+class TimidCircle {
   constructor(x_, y_){
     this.x = x_; // Initialize the x component of the vector
     this.y = y_; // Initialize the y component of the vector 
@@ -11,22 +11,6 @@ class PVector {
     this.yNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the Y value
     this.targetX = x_; // Target x position for lerping
     this.targetY = y_; // Target y position for lerping
-  }
-
-  addX(v) {
-    this.x = this.x + v.x; // Add the x component of another vector to this vector's x component
-  }
-
-  subX(v) {
-    this.x = this.x - v.x; // Subtract the x component of another vector from this vector's x component
-  }
-
-  addY(v) {
-    this.y = this.y + v.y; // Add the y component of another vector to this vector's y component
-  }
-
-  subY(v) {
-    this.y = this.y - v.y; // Subtract the y component of another vector from this vector's y component
   }
 
   addXNoise(){
@@ -75,7 +59,7 @@ class PVector {
   }
 }
 
-let circle = new PVector(sizeVar/2, sizeVar/2); // Create a new PVector instance with initial x and y values
+let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2); // Create a new PVector instance with initial x and y values
 
 function setup() {
   createCanvas(sizeVar, sizeVar); // Create a canvas with a width and height of 400 pixels
@@ -96,25 +80,25 @@ function draw() {
   
   
     if (circleRandX % 2 == 0) {
-      circle.addXNoise();
+      timidCircle.addXNoise();
     } else {
-      circle.subXNoise();
+      timidCircle.subXNoise();
     }
     
     if (circleRandY % 2 == 0) {
-      circle.addYNoise();
+      timidCircle.addYNoise();
     } else {
-      circle.subYNoise();
+      timidCircle.subYNoise();
     }
   }
 
-  circle.update();
-  circle.resetPosition()
+  timidCircle.update();
+  timidCircle.resetPosition()
 
 
   stroke(255); // Set the stroke color to white
-  fill(175); // Set the fill color to a light gray
-  ellipse(circle.x, circle.y, 30, 30); // Draw an ellipse at the current location with a diameter of 30 pixels
+  fill(34, 139, 34); // Set the fill color to a light gray
+  ellipse(timidCircle.x, timidCircle.y, 30, 30); // Draw an ellipse at the current location with a diameter of 30 pixels
 }
 
 //Next steps are create another circle and have it bounce around the canvas. But give it a few things. Make it change its velocity vector
