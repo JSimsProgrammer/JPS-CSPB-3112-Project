@@ -117,4 +117,6 @@ function draw() {
   ellipse(circle.x, circle.y, 30, 30); // Draw an ellipse at the current location with a diameter of 30 pixels
 }
 
-//Test
+//Next steps are create another circle and have it bounce around the canvas. But give it a few things. Make it change its velocity vector
+// every time it his a wall. Additionally, try messing with the acceleration from time to time. Maybe give it a few big steps or something.
+// And finally, if it is close to the other circle, make it change direction and flee! 
