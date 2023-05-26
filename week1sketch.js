@@ -59,6 +59,20 @@ class TimidCircle {
   }
 }
 
+class PVector {
+  constructor(x_, y_){
+    this.x = x_;
+    this.y = y_;
+  }
+
+  add(v) {
+    this.y = this.y + v.y;
+    this.x = this.x + v.x;
+  }
+}
+
+let bounceLocationVar = new PVector(100,100);
+let bounceVelocityVar = new PVector(2.5, 5);
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2); // Create a new PVector instance with initial x and y values
 
 function setup() {
