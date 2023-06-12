@@ -3,6 +3,7 @@ let counter = 0; // Counter for draw function
 let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
+let bounceMass = 16 // Size of bouncing ball
 
 // Food Seeker Class
 
@@ -187,5 +188,5 @@ function draw() {
 
   // Draw the bouncing ellipse
   fill(0, 0, 255); // Make the color blue
-  ellipse(bounceLocationVar.x, bounceLocationVar.y, 16, 16);
+  ellipse(bounceLocationVar.x, bounceLocationVar.y, bounceMass, bounceMass);
 }
