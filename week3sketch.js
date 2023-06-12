@@ -4,15 +4,19 @@ let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
 
+// Food Seeker Class
+
+
 // TimidCircle class
 class TimidCircle {
-  constructor(x_, y_){
+  constructor(x_, y_, mass){
     this.x = x_; // Initialize the x component of the vector
     this.y = y_; // Initialize the y component of the vector 
     this.xNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the X value
     this.yNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the Y value
     this.targetX = x_; // Target x position for lerping
     this.targetY = y_; // Target y position for lerping
+    this.mass = mass; // Set the mass (aka size) of the circle
   }
 
   // Add noise to the x position
@@ -120,7 +124,7 @@ class PVector {
 // Create instances of the PVector and TimidCircle classes
 let bounceLocationVar = new PVector(100, 100);
 let bounceVelocityVar = new PVector(2.5, 5);
-let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2);
+let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
 
 function setup() {
   createCanvas(sizeVar, sizeVar); // Create a canvas with a width and height of 400 pixels
@@ -179,7 +183,7 @@ function draw() {
   // Draw the timid circle
   stroke(255); // Set the stroke color to white
   fill(34, 139, 34); // Make the color green
-  ellipse(timidCircle.x, timidCircle.y, 30, 30); // Draw an ellipse at the current location with a diameter of 30 pixels
+  ellipse(timidCircle.x, timidCircle.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
 
   // Draw the bouncing ellipse
   fill(0, 0, 255); // Make the color blue
