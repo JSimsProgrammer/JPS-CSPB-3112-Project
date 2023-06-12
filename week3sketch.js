@@ -5,8 +5,34 @@ let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
 let bounceMass = 16 // Size of bouncing ball
 
-// Food Seeker Class
 
+/*
+***************
+CLASSES
+***************
+*/
+
+// Food Seeker Class
+class foodSeeker{
+  constructor(x_, y_, mass){
+    this.x = x_; // Initialize the x component of the vector
+    this.y = y_; // Initialize the y component of the vector 
+    this.xNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the X value
+    this.yNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the Y value
+    this.targetX = x_; // Target x position for lerping
+    this.targetY = y_; // Target y position for lerping
+    this.mass = mass; // Set the mass (aka size) of the circle
+  }
+}
+
+// Food Class
+class foodItem{
+  constructor(x_, y_, mass){
+    this.x = x_; // Initialize the x component of the vector
+    this.y = y_; // Initialize the y component of the vector 
+    this.mass = mass; // Set the mass (aka size) of the circle
+  }
+}
 
 // TimidCircle class
 class TimidCircle {
@@ -122,14 +148,34 @@ class PVector {
   }
 }
 
+/*
+***************
+INSTANTIATION
+***************
+*/
+
 // Create instances of the PVector and TimidCircle classes
 let bounceLocationVar = new PVector(100, 100);
 let bounceVelocityVar = new PVector(2.5, 5);
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
 
+
+/*
+***************
+SETUP
+***************
+*/
+
 function setup() {
   createCanvas(sizeVar, sizeVar); // Create a canvas with a width and height of 400 pixels
 }
+
+
+/*
+***************
+DRAW
+***************
+*/
 
 function draw() {
   background(0); // Set the background color to black
