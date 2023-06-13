@@ -111,8 +111,6 @@ class PVector {
   }
 }
 
-}
-
 
 // Food Seeker Class
 class FoodSeeker{
@@ -145,8 +143,7 @@ class foodItem{
 // TimidCircle class
 class TimidCircle {
   constructor(x_, y_, mass){
-    this.x = x_; // Initialize the x component of the vector
-    this.y = y_; // Initialize the y component of the vector 
+    this.location = new PVector(x_, y_); //Assign the location of this class
     this.xNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the X value
     this.yNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the Y value
     this.targetX = x_; // Target x position for lerping
@@ -181,28 +178,32 @@ class TimidCircle {
   // Update the circle's position using lerping
   update() {
     const easing = 0.05;
-    this.x = lerp(this.x, this.targetX, easing);
-    this.y = lerp(this.y, this.targetY, easing);
+    this.location.x = lerp(this.location.x, this.targetX, easing);
+    this.location.y = lerp(this.location.y, this.targetY, easing);
   }
 
   // Reset the circle's position if it goes beyond the canvas
   resetPosition() {
-    if (this.x > sizeVar) {
-      this.x = 0;
+    if (this.location.x > sizeVar) {
+      this.location.x = 0;
       this.targetX = 0;
     }
-    if (this.x < 0) {
-      this.x = sizeVar;
+    if (this.location.x < 0) {
+      this.location.x = sizeVar;
       this.targetX = sizeVar;
     }
-    if (this.y > sizeVar) {
-      this.y = 0;
+    if (this.location.y > sizeVar) {
+      this.location.y = 0;
       this.targetY = 0;
     }
-    if (this.y < 0) {
-      this.y = sizeVar;
+    if (this.location.y < 0) {
+      this.location.y = sizeVar;
       this.targetY = sizeVar;
     }
+  }
+
+  repelFoodSeeker(foodSeeker){
+    force = PVector.sub(this.location, foodSeeker.location)
   }
 }
 
@@ -266,11 +267,11 @@ function draw() {
   // Draw the timid circle
   stroke(255); // Set the stroke color to white
   fill(34, 139, 34); // Make the color green
-  ellipse(timidCircle.x, timidCircle.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
+  ellipse(timidCircle.location.x, timidCircle.location.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
 
 
   //Draw the food seeker
-  fill(255, 0, 255); // Make the color blue
+  fill(0, 0, 255); // Make the color blue
   ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
 }
 
