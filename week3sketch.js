@@ -25,6 +25,11 @@ class PVector {
     this.x = this.x + v.x;
   }
 
+  div(scalar){
+    this.x = this.x/scalar
+    this.y = this.y/scalar
+  }
+
   // Set a random positive x component of the vector
   randPosXVect(){
     this.x = Math.floor(random(1, maxSpeed))
@@ -78,7 +83,7 @@ class FoodSeeker{
     this.location.add(this.velocity)
   }
   applyForce(force){
-
+    this.acceleration.add(force)
   }
   
 }
@@ -251,4 +256,9 @@ function draw() {
   //Draw the food seeker
   fill(255, 0, 255); // Make the color blue
   ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
+}
+
+function mousePressed() {
+  let wind = new PVector(0.005,0);
+  foodSeeker.applyForce(wind);
 }
