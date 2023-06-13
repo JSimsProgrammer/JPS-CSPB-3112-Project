@@ -120,6 +120,15 @@ class PVector {
   static mag(v) {
     return Math.sqrt(v.x * v.x + v.y * v.y);
   }
+
+  static match(v1, v2){
+    if(v1.x == v2.x && v1.y == v2.y){
+      return true
+    } else {
+      return false
+    }
+  }
+
 }
 
 
@@ -130,9 +139,9 @@ class FoodSeeker{
     this.velocity = new PVector(0,0);
     this.acceleration = new PVector(0,0);
     this.mass = mass; // Set the mass (aka size) of the circle
+    this.pixelArray = []
   }
-
-
+  
   update(){
     this.velocity.add(this.acceleration)
     this.velocity.limit(topSpeed);
@@ -145,10 +154,26 @@ class FoodSeeker{
   goToFood(foodItem){
     let force = PVector.sub(foodItem.location, this.location);
     force.normalize();
-    force.multi(.2)
+    force.multi(.175)
     this.acceleration = force;
   }
-  
+
+  getPixelArray(){
+    let left = Math.floor(foodSeeker.location.x - foodSeeker.mass);
+    let right = Math.ceil(foodSeeker.location.x + foodSeeker.mass);
+    let top = Math.floor(foodSeeker.location.y - foodSeeker.mass);
+    let bottom = Math.ceil(foodSeeker.location.y + foodSeeker.mass);
+
+    // Iterate over each row within the bounding box
+    for (let y = top; y <= bottom; y++) {
+      // Iterate over each column within the bounding box
+      for (let x = left; x <= right; x++) {
+        // Create a PVector representing the current pixel and add it to the array
+        let pVector = new PVector(x, y);
+        this.pixelArray.push(pVector);
+      }
+    }
+  }
 }
 
 // Food Class
@@ -156,8 +181,25 @@ class FoodItem{
   constructor(x_, y_, mass){
     this.location = new PVector(x_, y_);
     this.mass = mass; // Set the mass (aka size) of the circle
+    this.pixelArray = []
   }
 
+  getPixelArray(){
+    let left = Math.floor(foodSeeker.location.x - foodSeeker.mass);
+    let right = Math.ceil(foodSeeker.location.x + foodSeeker.mass);
+    let top = Math.floor(foodSeeker.location.y - foodSeeker.mass);
+    let bottom = Math.ceil(foodSeeker.location.y + foodSeeker.mass);
+
+    // Iterate over each row within the bounding box
+    for (let y = top; y <= bottom; y++) {
+      // Iterate over each column within the bounding box
+      for (let x = left; x <= right; x++) {
+        // Create a PVector representing the current pixel and add it to the array
+        let pVector = new PVector(x, y);
+        this.pixelArray.push(pVector);
+      }
+    }
+  }
 }
 
 // TimidCircle class
@@ -319,5 +361,4 @@ function draw() {
 }
 
 
-//TODO: I don't think the food attraction needs to be a gravitational force. I think we just need to have this bad boy always moving towards the food
-// and then have the force just be the repellant force of the green circle
+//TODO: Now when it gets to the food, it, the food should relocate!
