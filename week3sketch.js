@@ -144,7 +144,7 @@ class FoodSeeker{
 }
 
 // Food Class
-class foodItem{
+class FoodItem{
   constructor(x_, y_, mass){
     this.location = new PVector(x_, y_);
     this.mass = mass; // Set the mass (aka size) of the circle
@@ -233,6 +233,7 @@ INSTANTIATION
 */
 
 // Create instances of the PVector and TimidCircle classes
+let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, 7.5);
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
 let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, 15)
 
@@ -296,5 +297,9 @@ function draw() {
   //Draw the food seeker
   fill(0, 0, 255); // Make the color blue
   ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
+
+  //Draw the food item
+  fill(255, 0, 255);
+  ellipse(foodItem.location.x, foodItem.location.y, foodItem.mass, foodItem.mass)
 }
 
