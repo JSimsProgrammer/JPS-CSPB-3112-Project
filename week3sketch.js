@@ -4,7 +4,8 @@ let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
 let bounceMass = 16 // Size of bouncing ball
-const grav = 10
+const grav = .001
+const topSpeed = 5
 
 /*
 ***************
@@ -58,6 +59,14 @@ class PVector {
     let m = this.mag();
     if (m != 0) {
       this.div(m);
+    }
+   }
+
+   limit(max) {
+    const magnitude = this.mag();
+    if (magnitude > max) {
+      this.div(magnitude); // Normalize the vector
+      this.multi(max); // Scale the vector to the specified maximum value
     }
    }
 
@@ -125,6 +134,7 @@ class FoodSeeker{
 
   update(){
     this.velocity.add(this.acceleration)
+    this.velocity.limit(topSpeed);
     this.location.add(this.velocity)
   }
   applyForce(force){
@@ -206,9 +216,11 @@ class TimidCircle {
   repelFoodSeeker(foodSeeker){
     let force = PVector.sub(this.location, foodSeeker.location);
     let distance = force.mag();
+    distance = constrain(distance,5.0,25.0);
     force.normalize();
     let strength = (grav * this.mass * foodSeeker.mass) / (distance*distance);
     force.multi(strength);
+    force.multi(-1)
     return force;
   }
 }
