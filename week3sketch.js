@@ -216,7 +216,7 @@ INSTANTIATION
 
 // Create instances of the PVector and TimidCircle classes
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
-let foodSeeker = new FoodSeeker(sizeVar/2, sizeVar/2, 15)
+let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, 15)
 
 
 /*
