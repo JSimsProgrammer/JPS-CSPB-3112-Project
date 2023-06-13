@@ -214,8 +214,6 @@ INSTANTIATION
 */
 
 // Create instances of the PVector and TimidCircle classes
-let bounceLocationVar = new PVector(100, 100);
-let bounceVelocityVar = new PVector(2.5, 5);
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
 let foodSeeker = new FoodSeeker(sizeVar/2, sizeVar/2, 15)
 
@@ -239,31 +237,6 @@ DRAW
 
 function draw() {
   background(0); // Set the background color to black
-
-  // Update the bouncing ellipse's position
-  bounceLocationVar.add(bounceVelocityVar);
-  
-  // Check if the bouncing ellipse hits the canvas boundaries and change its velocity accordingly
-  if ((bounceLocationVar.x > width-8) || (bounceLocationVar.x < 0+8)) {
-    bounceVelocityVar.x = bounceVelocityVar.x * -1;
-    if(bounceVelocityVar.x > 0){
-      bounceVelocityVar.randPosXVect()
-    } else { 
-      bounceVelocityVar.randNegXVect()
-    }
-    
-  }
-  if ((bounceLocationVar.y > height-8) || (bounceLocationVar.y < 0+8)) {
-    bounceVelocityVar.y = bounceVelocityVar.y * -1;
-    if(bounceVelocityVar.y > 0){
-      bounceVelocityVar.randPosYVect()
-    } else { 
-      bounceVelocityVar.randNegYVect()
-    }
-  }
-
-  // Reset the bouncing ellipse's position if it goes beyond the canvas
-  bounceLocationVar.resetPosition()
 
   // Update the timid circle's position
   if(counter % 5 == 0) {
@@ -295,9 +268,6 @@ function draw() {
   fill(34, 139, 34); // Make the color green
   ellipse(timidCircle.x, timidCircle.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
 
-  // Draw the bouncing ellipse
-  fill(0, 0, 255); // Make the color blue
-  ellipse(bounceLocationVar.x, bounceLocationVar.y, bounceMass, bounceMass);
 
   //Draw the food seeker
   fill(255, 0, 255); // Make the color blue
