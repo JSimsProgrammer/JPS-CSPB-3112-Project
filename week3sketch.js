@@ -4,8 +4,9 @@ let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
 let bounceMass = 16 // Size of bouncing ball
-const grav = .001
+const fear = 2.5
 const topSpeed = 5
+const foodNeed = 10
 
 /*
 ***************
@@ -149,6 +150,17 @@ class FoodItem{
     this.location = new PVector(x_, y_);
     this.mass = mass; // Set the mass (aka size) of the circle
   }
+
+  attractFoodSeeker(foodSeeker){
+    let force = PVector.sub(this.location, foodSeeker.location);
+    let distance = force.mag();
+    distance = constrain(distance,5.0,25.0);
+    force.normalize();
+    let strength = (foodNeed * this.mass) / (distance*distance);
+    force.multi(strength);
+    return force;
+  }
+
 }
 
 // TimidCircle class
@@ -218,7 +230,7 @@ class TimidCircle {
     let distance = force.mag();
     distance = constrain(distance,5.0,25.0);
     force.normalize();
-    let strength = (grav * this.mass * foodSeeker.mass) / (distance*distance);
+    let strength = (fear * this.mass) / (distance*distance);
     force.multi(strength);
     force.multi(-1)
     return force;
@@ -233,7 +245,8 @@ INSTANTIATION
 */
 
 // Create instances of the PVector and TimidCircle classes
-let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, 7.5);
+//let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, 7.5);
+let foodItem = new FoodItem(sizeVar/2, sizeVar/2, 10)
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
 let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, 15)
 
@@ -281,8 +294,12 @@ function draw() {
   timidCircle.resetPosition()
 
   //Timid circle repels the food seeker
-  repel = timidCircle.repelFoodSeeker(foodSeeker);
-  foodSeeker.applyForce(repel)
+  //repel = timidCircle.repelFoodSeeker(foodSeeker);
+  //foodSeeker.applyForce(repel)
+
+  // Attract the food seeker to the food
+  attract = foodItem.attractFoodSeeker(foodSeeker);
+  foodSeeker.applyForce(attract)
 
   //Update the Food Seeker
   foodSeeker.update()
@@ -303,3 +320,6 @@ function draw() {
   ellipse(foodItem.location.x, foodItem.location.y, foodItem.mass, foodItem.mass)
 }
 
+
+//TODO: I don't think the food attraction needs to be a gravitational force. I think we just need to have this bad boy always moving towards the food
+// and then have the force just be the repellant force of the green circle
