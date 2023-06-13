@@ -64,14 +64,19 @@ class PVector {
 
 
 // Food Seeker Class
-class foodSeeker{
+class FoodSeeker{
   constructor(x_, y_, mass){
-    this.location- new PVector(x_, y_);
+    this.location = new PVector(x_, y_);
     this.velocity = new PVector(0,0);
     this.acceleration = new PVector(0,0);
     this.mass = mass; // Set the mass (aka size) of the circle
   }
 
+
+  update(){
+    this.velocity.add(this.acceleration)
+    this.location.add(this.velocity)
+  }
   applyForce(force){
 
   }
@@ -161,6 +166,7 @@ INSTANTIATION
 let bounceLocationVar = new PVector(100, 100);
 let bounceVelocityVar = new PVector(2.5, 5);
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
+let foodSeeker = new FoodSeeker(sizeVar/2, sizeVar/2, 15)
 
 
 /*
@@ -230,6 +236,9 @@ function draw() {
   timidCircle.update();
   timidCircle.resetPosition()
 
+  //Update the Food Seeker
+  foodSeeker.update()
+
   // Draw the timid circle
   stroke(255); // Set the stroke color to white
   fill(34, 139, 34); // Make the color green
@@ -238,4 +247,8 @@ function draw() {
   // Draw the bouncing ellipse
   fill(0, 0, 255); // Make the color blue
   ellipse(bounceLocationVar.x, bounceLocationVar.y, bounceMass, bounceMass);
+
+  //Draw the food seeker
+  fill(255, 0, 255); // Make the color blue
+  ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
 }
