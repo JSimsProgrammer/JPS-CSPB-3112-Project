@@ -66,14 +66,10 @@ class PVector {
 // Food Seeker Class
 class foodSeeker{
   constructor(x_, y_, mass){
-    this.x = x_; // Initialize the x component of the vector
-    this.y = y_; // Initialize the y component of the vector 
-    this.xNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the X value
-    this.yNoiseVar = 0; // Assigns a random value between 0 and 1 to the noise of the Y value
-    this.targetX = x_; // Target x position for lerping
-    this.targetY = y_; // Target y position for lerping
+    this.location- new PVector(x_, y_);
+    this.velocity = new PVector(0,0);
+    this.acceleration = new PVector(0,0);
     this.mass = mass; // Set the mass (aka size) of the circle
-    
   }
 
   applyForce(force){
@@ -85,8 +81,7 @@ class foodSeeker{
 // Food Class
 class foodItem{
   constructor(x_, y_, mass){
-    this.x = x_; // Initialize the x component of the vector
-    this.y = y_; // Initialize the y component of the vector 
+    this.location = new PVector(x_, y_);
     this.mass = mass; // Set the mass (aka size) of the circle
   }
 }
