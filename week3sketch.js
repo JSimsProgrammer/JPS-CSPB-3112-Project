@@ -25,10 +25,34 @@ class PVector {
     this.x = this.x + v.x;
   }
 
+  // Subtract a vector from the current vector
+  sub(v) {
+    this.x = this.x - v.x;
+    this.y = this.y - v.y;
+  }
+
+  // Multiply the vector by a scalar
+  multi(scalar){
+    this.x = this.x*scalar
+    this.y = this.y*scalar
+  }
+
+  // Divide the vector by a scalar
   div(scalar){
     this.x = this.x/scalar
     this.y = this.y/scalar
   }
+
+  mag(){
+    return Math.sqrt((this.x * this.x) + (this.y * this.y))
+  }
+
+  normalize() {
+    m = this.mag();
+    if (m != 0) {
+      this.div(m);
+    }
+   }
 
   // Set a random positive x component of the vector
   randPosXVect(){
