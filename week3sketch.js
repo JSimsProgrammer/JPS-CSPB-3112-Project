@@ -12,6 +12,57 @@ CLASSES
 ***************
 */
 
+// PVector class
+class PVector {
+  constructor(x_, y_){
+    this.x = x_;
+    this.y = y_;
+  }
+
+  // Add a vector to the current vector
+  add(v) {
+    this.y = this.y + v.y;
+    this.x = this.x + v.x;
+  }
+
+  // Set a random positive x component of the vector
+  randPosXVect(){
+    this.x = Math.floor(random(1, maxSpeed))
+  }
+
+  // Set a random positive y component of the vector
+  randPosYVect(){
+    this.y = Math.floor(random(1, maxSpeed))
+  }
+
+  // Set a random negative x component of the vector
+  randNegXVect(){
+    this.x = Math.floor(random(-maxSpeed, -1))
+  }
+
+  // Set a random negative y component of the vector
+  randNegYVect(){
+    this.y = Math.floor(random(-maxSpeed, -1))
+  }
+
+  // Reset the vector's position if it goes beyond the canvas
+  resetPosition() {
+    if (this.x > sizeVar + 30) {
+      this.x = sizeVar/2;
+    }
+    if (this.x < -30) {
+      this.x = sizeVar/2;
+    }
+    if (this.y > sizeVar +30) {
+      this.y = sizeVar/2;
+    }
+    if (this.y < -30) {
+      this.y = sizeVar/2;
+    }
+  }
+}
+
+
 // Food Seeker Class
 class foodSeeker{
   constructor(x_, y_, mass){
@@ -22,7 +73,13 @@ class foodSeeker{
     this.targetX = x_; // Target x position for lerping
     this.targetY = y_; // Target y position for lerping
     this.mass = mass; // Set the mass (aka size) of the circle
+    
   }
+
+  applyForce(force){
+
+  }
+  
 }
 
 // Food Class
@@ -98,55 +155,6 @@ class TimidCircle {
   }
 }
 
-// PVector class
-class PVector {
-  constructor(x_, y_){
-    this.x = x_;
-    this.y = y_;
-  }
-
-  // Add a vector to the current vector
-  add(v) {
-    this.y = this.y + v.y;
-    this.x = this.x + v.x;
-  }
-
-  // Set a random positive x component of the vector
-  randPosXVect(){
-    this.x = Math.floor(random(1, maxSpeed))
-  }
-
-  // Set a random positive y component of the vector
-  randPosYVect(){
-    this.y = Math.floor(random(1, maxSpeed))
-  }
-
-  // Set a random negative x component of the vector
-  randNegXVect(){
-    this.x = Math.floor(random(-maxSpeed, -1))
-  }
-
-  // Set a random negative y component of the vector
-  randNegYVect(){
-    this.y = Math.floor(random(-maxSpeed, -1))
-  }
-
-  // Reset the vector's position if it goes beyond the canvas
-  resetPosition() {
-    if (this.x > sizeVar + 30) {
-      this.x = sizeVar/2;
-    }
-    if (this.x < -30) {
-      this.x = sizeVar/2;
-    }
-    if (this.y > sizeVar +30) {
-      this.y = sizeVar/2;
-    }
-    if (this.y < -30) {
-      this.y = sizeVar/2;
-    }
-  }
-}
 
 /*
 ***************
