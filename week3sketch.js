@@ -4,6 +4,7 @@ let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
 let bounceMass = 16 // Size of bouncing ball
+const grav = 10
 
 /*
 ***************
@@ -54,7 +55,7 @@ class PVector {
   }
 
   normalize() {
-    m = this.mag();
+    let m = this.mag();
     if (m != 0) {
       this.div(m);
     }
@@ -203,7 +204,12 @@ class TimidCircle {
   }
 
   repelFoodSeeker(foodSeeker){
-    force = PVector.sub(this.location, foodSeeker.location)
+    let force = PVector.sub(this.location, foodSeeker.location);
+    let distance = force.mag();
+    force.normalize();
+    let strength = (grav * this.mass * foodSeeker.mass) / (distance*distance);
+    force.multi(strength);
+    return force;
   }
 }
 
@@ -261,8 +267,13 @@ function draw() {
   timidCircle.update();
   timidCircle.resetPosition()
 
+  //Timid circle repels the food seeker
+  repel = timidCircle.repelFoodSeeker(foodSeeker);
+  foodSeeker.applyForce(repel)
+
   //Update the Food Seeker
   foodSeeker.update()
+  
 
   // Draw the timid circle
   stroke(255); // Set the stroke color to white
@@ -275,7 +286,3 @@ function draw() {
   ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
 }
 
-function mousePressed() {
-  let wind = new PVector(0.005,0);
-  foodSeeker.applyForce(wind);
-}
