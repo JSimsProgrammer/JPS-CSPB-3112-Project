@@ -3,7 +3,8 @@ let counter = 0; // Counter for draw function
 let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
-let bounceMass = 16 // Size of bouncing ball
+let foodSeekerMass = 16 // Size of bouncing ball
+let foodItemMass = 7.5
 const fear = 2
 const topSpeed = 5
 const foodNeed = 10
@@ -138,6 +139,10 @@ class PVector {
     }
   }
 
+  static getVDistance(v1, v2){
+    return Math.abs(Math.sqrt(((v2.x - v1.x) * (v2.x - v1.x)) + ((v2.y - v1.y) * (v2.y - v1.y))))
+  }
+
 }
 
 
@@ -148,7 +153,6 @@ class FoodSeeker{
     this.velocity = new PVector(0,0);
     this.acceleration = new PVector(0,0);
     this.mass = mass; // Set the mass (aka size) of the circle
-    this.pixelArray = []
   }
 
   update(){
@@ -167,14 +171,6 @@ class FoodSeeker{
     this.acceleration = force;
   }
 
-  getPixelArray(){
-    let left = new PVector(Math.floor(this.location.x - this.mass), this.location.y);
-    let right = new PVector(Math.ceil(this.location.x + this.mass), this.location.y);
-    let top = new PVector(Math.floor(this.location.y - this.mass), this.location.x);
-    let bottom = new PVector(Math.ceil(this.location.y + this.mass), this.location.x);
-
-    this.pixelArray = [this.location, left, right, top, bottom];
-  } 
   
 }
 
@@ -183,24 +179,6 @@ class FoodItem{
   constructor(x_, y_, mass){
     this.location = new PVector(x_, y_);
     this.mass = mass; // Set the mass (aka size) of the circle
-    this.pixelArray = []
-  }
-
-  getPixelArray(){
-    let left = Math.floor(this.location.x - this.mass);
-    let right = Math.ceil(this.location.x + this.mass);
-    let top = Math.floor(this.location.y - foodSeeker.mass);
-    let bottom = Math.ceil(this.location.y + this.mass);
-
-    // Iterate over each row within the bounding box
-    for (let y = top; y <= bottom; y++) {
-      // Iterate over each column within the bounding box
-      for (let x = left; x <= right; x++) {
-        // Create a PVector representing the current pixel and add it to the array
-        let pVector = new PVector(x, y);
-        this.pixelArray.push(pVector);
-      }
-    }
   }
 
   resetPosition(){
@@ -294,13 +272,10 @@ INSTANTIATION
 
 // Create instances of the PVector and TimidCircle classes
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
-let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, 15)
-//let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, 7.5);
-let foodItem = new FoodItem(sizeVar/2, sizeVar/2, 10)
+let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, foodSeekerMass)
+//let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, foodItemMass);
+let foodItem = new FoodItem(sizeVar/2, sizeVar/2, foodItemMass)
 
-//Get Pixel Arrays for Each Item
-foodSeeker.getPixelArray();
-foodItem.getPixelArray();
 
 
 /*
