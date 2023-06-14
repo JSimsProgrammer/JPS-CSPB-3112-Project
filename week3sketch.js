@@ -13,7 +13,16 @@ const foodNeed = 10
 Functions
 ***************
 */
-
+function findCommonPixels(array1, array2) {
+  for (let i = 0; i < array1.length; i++) {
+    for (let j = 0; j < array2.length; j++) {
+      if (PVector.match(array1[i], array2[j])) {
+        return true; // Found a common pixel, return true
+      }
+    }
+  }
+  return false; // No common pixels found
+}
 
 /*
 ***************
@@ -141,7 +150,7 @@ class FoodSeeker{
     this.mass = mass; // Set the mass (aka size) of the circle
     this.pixelArray = []
   }
-  
+
   update(){
     this.velocity.add(this.acceleration)
     this.velocity.limit(topSpeed);
@@ -159,10 +168,10 @@ class FoodSeeker{
   }
 
   getPixelArray(){
-    let left = Math.floor(foodSeeker.location.x - foodSeeker.mass);
-    let right = Math.ceil(foodSeeker.location.x + foodSeeker.mass);
-    let top = Math.floor(foodSeeker.location.y - foodSeeker.mass);
-    let bottom = Math.ceil(foodSeeker.location.y + foodSeeker.mass);
+    let left = Math.floor(this.location.x - this.mass);
+    let right = Math.ceil(this.location.x + this.mass);
+    let top = Math.floor(this.location.y - this.mass);
+    let bottom = Math.ceil(this.location.y + this.mass);
 
     // Iterate over each row within the bounding box
     for (let y = top; y <= bottom; y++) {
@@ -185,10 +194,10 @@ class FoodItem{
   }
 
   getPixelArray(){
-    let left = Math.floor(foodSeeker.location.x - foodSeeker.mass);
-    let right = Math.ceil(foodSeeker.location.x + foodSeeker.mass);
-    let top = Math.floor(foodSeeker.location.y - foodSeeker.mass);
-    let bottom = Math.ceil(foodSeeker.location.y + foodSeeker.mass);
+    let left = Math.floor(this.location.x - this.mass);
+    let right = Math.ceil(this.location.x + this.mass);
+    let top = Math.floor(this.location.y - foodSeeker.mass);
+    let bottom = Math.ceil(this.location.y + this.mass);
 
     // Iterate over each row within the bounding box
     for (let y = top; y <= bottom; y++) {
@@ -200,6 +209,13 @@ class FoodItem{
       }
     }
   }
+
+  resetPosition(){
+    this.location.x = Math.floor(Math.random() * (sizeVar - 15)) + 15
+    this.location.y = Math.floor(Math.random() * (sizeVar - 15)) + 15
+    foodItem.getPixelArray();
+  }
+
 }
 
 // TimidCircle class
@@ -284,10 +300,14 @@ INSTANTIATION
 */
 
 // Create instances of the PVector and TimidCircle classes
-//let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, 7.5);
-let foodItem = new FoodItem(sizeVar/2, sizeVar/2, 10)
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
 let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, 15)
+//let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, 7.5);
+let foodItem = new FoodItem(sizeVar/2, sizeVar/2, 10)
+
+//Get Pixel Arrays for Each Item
+foodSeeker.getPixelArray();
+foodItem.getPixelArray();
 
 
 /*
@@ -332,6 +352,16 @@ function draw() {
   timidCircle.update();
   timidCircle.resetPosition()
 
+  //Check to see if there is overlap. If so, move the food!
+  foodSeeker.getPixelArray();
+  let hasCommonPixels = findCommonPixels(foodSeeker.pixelArray, foodItem.pixelArray);
+
+  if(hasCommonPixels){
+    foodItem.resetPosition()
+  }
+
+
+
   // Attract the food seeker to the food
   foodSeeker.goToFood(foodItem);
 
@@ -339,11 +369,8 @@ function draw() {
   repel = timidCircle.repelFoodSeeker(foodSeeker);
   foodSeeker.applyForce(repel)
 
-
-
   //Update the Food Seeker
   foodSeeker.update()
-  
 
   // Draw the timid circle
   stroke(255); // Set the stroke color to white
