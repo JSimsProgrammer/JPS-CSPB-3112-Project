@@ -359,8 +359,8 @@ function draw() {
   foodSeeker.goToFood(foodItem);
 
   //Timid circle repels the food seeker
-  repel = timidCircle.repelFoodSeeker(foodSeeker);
-  foodSeeker.applyForce(repel)
+  //repel = timidCircle.repelFoodSeeker(foodSeeker);
+  //foodSeeker.applyForce(repel)
 
   //Update the Food Seeker
   foodSeeker.update()
