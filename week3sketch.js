@@ -5,9 +5,9 @@ let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 400; // Size of the canvas
 let foodSeekerMass = 16 // Size of bouncing ball
 let foodItemMass = 7.5
-const fear = 2
-const topSpeed = 5
-const foodNeed = 10
+const fear = 7
+const topSpeed = 3.75
+const foodNeed = .45
 
 /*
 ***************
@@ -158,7 +158,7 @@ class FoodSeeker{
   goToFood(foodItem){
     let force = PVector.sub(foodItem.location, this.location);
     force.normalize();
-    force.multi(.175)
+    force.multi(foodNeed)
     this.acceleration = force;
   }
 
@@ -175,7 +175,6 @@ class FoodItem{
   resetPosition(){
     this.location.x = Math.floor(Math.random() * (sizeVar - 15)) + 15
     this.location.y = Math.floor(Math.random() * (sizeVar - 15)) + 15
-    foodItem.getPixelArray();
   }
 
 }
@@ -264,8 +263,8 @@ INSTANTIATION
 // Create instances of the PVector and TimidCircle classes
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
 let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, foodSeekerMass)
-//let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, foodItemMass);
-let foodItem = new FoodItem(sizeVar/2, sizeVar/2, foodItemMass)
+let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, foodItemMass);
+//let foodItem = new FoodItem(sizeVar/2, sizeVar/2, foodItemMass)
 
 
 
@@ -312,10 +311,9 @@ function draw() {
   timidCircle.resetPosition()
 
   //Check to see if there is overlap. If so, move the food!
-  foodSeeker.getPixelArray();
-  let hasCommonPixels = findCommonPixels(foodSeeker.pixelArray, foodItem.pixelArray);
+  let seekerToItemDist = PVector.getVDistance(foodItem.location, foodSeeker.location)
 
-  if(hasCommonPixels){
+  if(seekerToItemDist <= (foodItemMass + foodSeekerMass)/2){
     foodItem.resetPosition()
   }
 
