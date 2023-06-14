@@ -2,7 +2,7 @@
 let counter = 0; // Counter for draw function
 let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
-let sizeVar = 400; // Size of the canvas
+let sizeVar = 800; // Size of the canvas
 let foodSeekerMass = 16 // Size of bouncing ball
 let foodItemMass = 7.5
 const fear = 7
