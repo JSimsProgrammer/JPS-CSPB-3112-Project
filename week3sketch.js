@@ -168,21 +168,14 @@ class FoodSeeker{
   }
 
   getPixelArray(){
-    let left = Math.floor(this.location.x - this.mass);
-    let right = Math.ceil(this.location.x + this.mass);
-    let top = Math.floor(this.location.y - this.mass);
-    let bottom = Math.ceil(this.location.y + this.mass);
+    let left = new PVector(Math.floor(this.location.x - this.mass), this.location.y);
+    let right = new PVector(Math.ceil(this.location.x + this.mass), this.location.y);
+    let top = new PVector(Math.floor(this.location.y - this.mass), this.location.x);
+    let bottom = new PVector(Math.ceil(this.location.y + this.mass), this.location.x);
 
-    // Iterate over each row within the bounding box
-    for (let y = top; y <= bottom; y++) {
-      // Iterate over each column within the bounding box
-      for (let x = left; x <= right; x++) {
-        // Create a PVector representing the current pixel and add it to the array
-        let pVector = new PVector(x, y);
-        this.pixelArray.push(pVector);
-      }
-    }
-  }
+    this.pixelArray = [this.location, left, right, top, bottom];
+  } 
+  
 }
 
 // Food Class
@@ -388,4 +381,5 @@ function draw() {
 }
 
 
-//TODO: Now when it gets to the food, it, the food should relocate!
+//TODO: Need to fix the food jumping around. Instead of comparing both pixel arrays, just look for the center, top, bottom, left, right, into an array.
+//Then check those for cross over.
