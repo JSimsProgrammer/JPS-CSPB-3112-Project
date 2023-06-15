@@ -8,7 +8,7 @@ let foodSeekerMass = 30 // Size of bouncing ball
 let foodItemMass = 15
 const fear = 8
 const topSpeed = 3.75
-const foodNeed = .75
+const foodNeed = .8
 
 /*
 ***************
@@ -284,7 +284,7 @@ SETUP
 
 function setup() {
   createCanvas(sizeVar, sizeVar); // Create a canvas with a width and height of 400 pixels
-  //background(0); // Set the background color to black
+  background(0); // Set the background color to black
 
 }
 
@@ -296,7 +296,7 @@ DRAW
 */
 
 function draw() {
-  background(0); // Set the background color to black
+  //background(0); // Set the background color to black
 
 
   // Update the timid circle's position
@@ -355,8 +355,8 @@ function draw() {
   // Draw timid circle lines
 
   stroke(34, 139, 34); // Set the stroke color to Green
-  line(timidCircle.location.x, timidCircle.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
-  line(timidCircle.location.x, timidCircle.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
+  //line(timidCircle.location.x, timidCircle.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
+  //line(timidCircle.location.x, timidCircle.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
 
   //Draw the food seeker
   stroke(255); // Set the stroke color to white
@@ -365,19 +365,28 @@ function draw() {
   
   // Draw foodSeeker lines
   stroke(0, 0, 255); // Set the stroke color to Blue
-  line(foodSeeker.location.x, foodSeeker.location.y, seekerItemMP.x, seekerItemMP.y)
-  line(foodSeeker.location.x, foodSeeker.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
+  //line(foodSeeker.location.x, foodSeeker.location.y, seekerItemMP.x, seekerItemMP.y)
+  //line(foodSeeker.location.x, foodSeeker.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
 
 
   //Draw the food item
   stroke(255); // Set the stroke color to white
   fill(255, 0, 255);
-  ellipse(foodItem.location.x, foodItem.location.y, foodItem.mass, foodItem.mass)
+  //ellipse(foodItem.location.x, foodItem.location.y, foodItem.mass, foodItem.mass)
 
   // Draw FoodItem lines
   stroke(255, 0, 255); // Set the stroke color to Pink
-  line(foodItem.location.x, foodItem.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
-  line(foodItem.location.x, foodItem.location.y, seekerItemMP.x, seekerItemMP.y) 
+  //line(foodItem.location.x, foodItem.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
+  //line(foodItem.location.x, foodItem.location.y, seekerItemMP.x, seekerItemMP.y) 
+
+///*
+  //Draw midpoint circles
+  fill(255)// Set fil to white
+  stroke(0)//Set stroke to black
+  ellipse(timidFoodItemMP.x, timidFoodItemMP.y, 20)
+  ellipse(timidFoodSeekerMP.x, timidFoodSeekerMP.y, 20)
+  ellipse(seekerItemMP.x, seekerItemMP.y, 20)
+//*/
 }
 
 
