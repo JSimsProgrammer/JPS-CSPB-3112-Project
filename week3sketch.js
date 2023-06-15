@@ -17,6 +17,7 @@ Functions
 */
 
 
+
 /*
 ***************
 CLASSES
@@ -133,6 +134,12 @@ class PVector {
 
   static getVDistance(v1, v2){
     return Math.abs(Math.sqrt(((v2.x - v1.x) * (v2.x - v1.x)) + ((v2.y - v1.y) * (v2.y - v1.y))))
+  }
+
+  static getMidpoint(v1, v2){
+    let midX = (v1.x + v2.x) / 2
+    let midY = (v1.y + v2.y) / 2
+    return new PVector(midX, midY)
   }
 
 }
@@ -336,13 +343,38 @@ function draw() {
   ellipse(timidCircle.location.x, timidCircle.location.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
 
 
+  // Get midpoints
+  timidFoodItemMP = PVector.getMidpoint(timidCircle.location, foodItem.location)
+  timidFoodSeekerMP =PVector.getMidpoint(timidCircle.location, foodSeeker.location)
+  seekerItemMP = PVector.getMidpoint(foodSeeker.location, foodItem.location)
+
+
+  // Draw timid circle lines
+
+  stroke(34, 139, 34); // Set the stroke color to Green
+  line(timidCircle.location.x, timidCircle.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
+  line(timidCircle.location.x, timidCircle.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
+
   //Draw the food seeker
+  stroke(255); // Set the stroke color to white
   fill(0, 0, 255); // Make the color blue
   ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
+  
+  // Draw foodSeeker lines
+  stroke(0, 0, 255); // Set the stroke color to Blue
+  line(foodSeeker.location.x, foodSeeker.location.y, seekerItemMP.x, seekerItemMP.y)
+  line(foodSeeker.location.x, foodSeeker.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
+
 
   //Draw the food item
+  stroke(255); // Set the stroke color to white
   fill(255, 0, 255);
   ellipse(foodItem.location.x, foodItem.location.y, foodItem.mass, foodItem.mass)
+
+  // Draw FoodItem lines
+  stroke(255, 0, 255); // Set the stroke color to Pink
+  line(foodItem.location.x, foodItem.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
+  line(foodItem.location.x, foodItem.location.y, seekerItemMP.x, seekerItemMP.y) 
 }
 
 
