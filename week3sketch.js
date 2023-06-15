@@ -3,11 +3,12 @@ let counter = 0; // Counter for draw function
 let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 800; // Size of the canvas
-let foodSeekerMass = 16 // Size of bouncing ball
-let foodItemMass = 7.5
-const fear = 7
+let timidCirclemass = 55
+let foodSeekerMass = 30 // Size of bouncing ball
+let foodItemMass = 15
+const fear = 8
 const topSpeed = 3.75
-const foodNeed = .45
+const foodNeed = .75
 
 /*
 ***************
@@ -261,7 +262,7 @@ INSTANTIATION
 */
 
 // Create instances of the PVector and TimidCircle classes
-let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, 30);
+let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, timidCirclemass);
 let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, foodSeekerMass)
 let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, foodItemMass);
 //let foodItem = new FoodItem(sizeVar/2, sizeVar/2, foodItemMass)
