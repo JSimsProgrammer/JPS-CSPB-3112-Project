@@ -284,6 +284,8 @@ SETUP
 
 function setup() {
   createCanvas(sizeVar, sizeVar); // Create a canvas with a width and height of 400 pixels
+  //background(0); // Set the background color to black
+
 }
 
 
@@ -295,6 +297,7 @@ DRAW
 
 function draw() {
   background(0); // Set the background color to black
+
 
   // Update the timid circle's position
   if(counter % 5 == 0) {
