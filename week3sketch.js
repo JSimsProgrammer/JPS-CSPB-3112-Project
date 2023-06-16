@@ -343,7 +343,7 @@ function draw() {
   // Draw the timid circle
   stroke(255); // Set the stroke color to white
   fill(34, 139, 34); // Make the color green
-  ellipse(timidCircle.location.x, timidCircle.location.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
+  //ellipse(timidCircle.location.x, timidCircle.location.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
 
 
   // Get midpoints
@@ -355,18 +355,18 @@ function draw() {
   // Draw timid circle lines
 
   stroke(34, 139, 34); // Set the stroke color to Green
-  //line(timidCircle.location.x, timidCircle.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
-  //line(timidCircle.location.x, timidCircle.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
+  line(timidCircle.location.x, timidCircle.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
+  line(timidCircle.location.x, timidCircle.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
 
   //Draw the food seeker
   stroke(255); // Set the stroke color to white
   fill(0, 0, 255); // Make the color blue
-  ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
+  //ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
   
   // Draw foodSeeker lines
   stroke(0, 0, 255); // Set the stroke color to Blue
-  //line(foodSeeker.location.x, foodSeeker.location.y, seekerItemMP.x, seekerItemMP.y)
-  //line(foodSeeker.location.x, foodSeeker.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
+  line(foodSeeker.location.x, foodSeeker.location.y, seekerItemMP.x, seekerItemMP.y)
+  line(foodSeeker.location.x, foodSeeker.location.y, timidFoodSeekerMP.x, timidFoodSeekerMP.y)
 
 
   //Draw the food item
@@ -376,19 +376,25 @@ function draw() {
 
   // Draw FoodItem lines
   stroke(255, 0, 255); // Set the stroke color to Pink
-  //line(foodItem.location.x, foodItem.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
-  //line(foodItem.location.x, foodItem.location.y, seekerItemMP.x, seekerItemMP.y) 
+  line(foodItem.location.x, foodItem.location.y, timidFoodItemMP.x, timidFoodItemMP.y)
+  line(foodItem.location.x, foodItem.location.y, seekerItemMP.x, seekerItemMP.y) 
 
-///*
+/*
   //Draw midpoint circles
   fill(255)// Set fil to white
   stroke(0)//Set stroke to black
   ellipse(timidFoodItemMP.x, timidFoodItemMP.y, 20)
   ellipse(timidFoodSeekerMP.x, timidFoodSeekerMP.y, 20)
   ellipse(seekerItemMP.x, seekerItemMP.y, 20)
+*/
+
+///*
+//Draw Lines between midpoints 
+stroke(255); // Set the stroke color to white
+noFill()
+triangle(timidFoodSeekerMP.x, timidFoodSeekerMP.y, seekerItemMP.x, seekerItemMP.y, timidFoodItemMP.x, timidFoodItemMP.y)
+
 //*/
 }
 
 
-//TODO: Need to fix the food jumping around. Instead of comparing both pixel arrays, just look for the center, top, bottom, left, right, into an array.
-//Then check those for cross over.
