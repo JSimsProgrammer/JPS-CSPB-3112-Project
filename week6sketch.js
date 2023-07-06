@@ -5,11 +5,12 @@ let maxSpeed = 7; //max speed of the bouncing circle
 let sizeVar = 800; // Size of the canvas
 let timidCirclemass = 55
 let foodSeekerMass = 30 // Size of bouncing ball
-let foodItemMass = 15
+let foodItemMass = 50
 const fear = 8
 const topSpeed = 3.75
 const foodNeed = .75
-const flySpeed = 1
+const flySpeed = 10
+swarmSize = 1
 
 /*
 ***************
@@ -17,8 +18,61 @@ Functions
 ***************
 */
 
+function getSideLenNotHypot(hypotenuse, leg) {
+  
+  let len = Math.sqrt(Math.pow(hypotenuse, 2) - Math.pow(leg, 2));
+  return len;
+}
+
+function getMidpoint(x1, y1, x2, y2) {
+  let newX = (x1 + x2) / 2;
+  let newY = (y1 + y2) / 2;
+
+  let result = [newX, newY];
+
+  return result;
+}
+
+
+function getEqTriagleCoord(x, y, length) {
+  let x2 = x + length;
+  let y2 = y;
+  let midpoint = getMidpoint(x, y, x2, y2);
+  let x3 = midpoint[0];
+  let centerLen = getSideLenNotHypot(length, length/2);
+  let y3 = y + centerLen;
+
+  return [x, y, x2, y2, x3, y3];
+}
+
+
+function rotateAroundPoint(xC, yC, xO, yO, angle) {
+  let xN = (xO - xC) * Math.cos(angle) - (yO - yC) * Math.sin(angle) + xC;
+  let yN = (xO - xC) * Math.sin(angle) + (yO - yC) * Math.cos(angle) + yC;
+
+  return [xN, yN];
+}
+
+function getLineLen(x1, y1, x2, y2) {
+  return Math.sqrt((x1 - x2)**2 + (y1 - y2)**2)
+}
+
+function shrinkTriangle(triangleLst, scale){
+  for(let i = 0; i < triangleLst.length; i++){
+    triangleLst[i] = triangleLst[i] * scale
+  }
+}
+
+function getRandomFloat(min, max) {
+  return Math.random() * (max - min) + min;
+}
+
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function getRandColorInt() {
+  return Math.floor(Math.random() * 256);
 }
 
 /*
@@ -349,6 +403,129 @@ class Crawler {
   }
 }
 
+class Particle {
+  constructor(){
+  this.location = new PVector(0,0);
+  this.velocity = new PVector(getRandomFloat(-5, 5), getRandomFloat(-5, 5));
+  this.acceleration = new PVector(0, .1);
+  this.lifespan = 255
+  //this.bodyColor = [getRandColorInt(), getRandColorInt(), getRandColorInt()]
+
+  this.location.x =  getRandomInt(-50, sizeVar + 50);
+  //If X is inside the canvas, Reset Y to be above or below. 
+  if(this.location.x < sizeVar && this.location.x > 0) {
+      let randInt = getRandomInt(1, 100);
+      if(randInt % 2  == 0) {
+        this.location.y = -50;
+      } else {
+        this.location.y = sizeVar + 50;
+      }
+    //Else, Y can be reset anywhere in defined boundaries
+    } else {
+      this.location.y =  getRandomInt(-50, sizeVar + 50);
+    }
+    let destination = new PVector(sizeVar/2, sizeVar/2);
+    let dir = PVector.sub(destination, this.location)
+
+    dir.normalize();
+    dir.multi(0.5)
+    this.acceleration = dir;
+
+    this.velocity.add(this.acceleration)
+    this.velocity.limit(topSpeed);
+    this.location.add(this.velocity)
+  }  
+  
+
+ 
+  update(foodX, foodY) {
+    this.lifespan -= 2
+    let destination = new PVector(foodX, foodY);
+    let dir = PVector.sub(destination, this.location)
+
+    dir.normalize();
+    dir.multi(0.5)
+    this.acceleration = dir;
+
+    this.velocity.add(this.acceleration)
+    this.velocity.limit(flySpeed);
+    this.location.add(this.velocity)
+    
+  }
+
+  reset() {
+    this.location = new PVector(sizeVar/2,sizeVar/4);
+    this.velocity = new PVector(getRandomFloat(-5, 5), getRandomFloat(-5, 5));
+    this.acceleration = new PVector(0, .1);
+    this.lifespan = 255
+  }
+ 
+  display() {
+    let angle = atan2(this.velocity.y, this.velocity.x)
+    stroke(220, this.lifespan)
+    fill(220, this.lifespan);
+    push();
+    rectMode(CENTER);
+    translate(this.location.x, this.location.y);
+    rotate(angle);
+    //let coord = getEqTriagleCoord(0, 0, 10)
+    //triangle(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5])
+    rect(0, 0, 5, 1)
+    pop();
+  }
+
+  isDead(){
+    if(this.lifespan < 0){
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  run(foodX, foodY){
+    this.display();
+    this.update(foodX, foodY);
+  }
+
+}
+
+class ParticleSystem{
+  constructor(){
+    this.pArray = []
+    this.location = new PVector(sizeVar/2,sizeVar/4);
+  }
+//First, I want to be populating the list every frame. Then, I want to remove any dead 
+//particles. Finally, I want to display the current particles in the list. This will then
+//all be called in a run function. 
+  addParticle(){
+    let p = new Particle();
+    this.pArray.push(p);
+  }
+
+  run(foodX, foodY){
+    const iterator = this.pArray[Symbol.iterator]();
+    let current = iterator.next();
+
+    while(!current.done){
+      const particle = current.value;
+      particle.run(foodX, foodY);
+      if (particle.isDead()) {
+        const indexToRemove = this.pArray.indexOf(particle);
+        this.pArray.splice(indexToRemove, 1);
+        console.log("SPLICE!")
+        current = iterator.next();
+      } else {
+        current = iterator.next();
+      }
+    }
+    for(let i = 0; i<swarmSize; i++){
+      this.addParticle();
+    } 
+    console.log(this.pArray.length)
+  }
+
+}
+
 
 /*
 ***************
@@ -361,7 +538,7 @@ let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, timidCirclemass);
 let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, foodSeekerMass)
 let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, foodItemMass);
 let crawler = new Crawler(0, 0, 0, 0.1, 15, 0, .001, 150, 0, 1, 0, -1);
-
+let swarm = new ParticleSystem();
 
 
 /*
@@ -441,6 +618,9 @@ function draw() {
   //Draw the food item
   fill(255, 0, 255);
   ellipse(foodItem.location.x, foodItem.location.y, foodItem.mass, foodItem.mass)
+
+  //Make the Swarm
+  swarm.run(foodItem.location.x, foodItem.location.y);
 }
 
 
