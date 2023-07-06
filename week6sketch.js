@@ -234,6 +234,27 @@ class FoodItem{
   resetPosition(){
     this.location.x = Math.floor(Math.random() * (sizeVar - 15)) + 15
     this.location.y = Math.floor(Math.random() * (sizeVar - 15)) + 15
+    this.mass = foodItemMass;
+  }
+
+  shrink(){
+    this.mass -= .01;
+    console.log(this.mass)
+  }
+
+  isDead(){
+    if(this.mass < 7){
+      this.resetPosition();
+    }
+  }
+
+  isTouching(otherLocation){
+    let dist = PVector.getVDistance(this.location, otherLocation)
+    if(dist < this.mass){
+      return true
+    } else {
+      return false
+    }
   }
 
 }
@@ -351,8 +372,6 @@ class Crawler {
       line(pos, y - 30, pos + x, y - 60);
       
       this.angleY += this.aVelocityY;
-      console.log(y - this.location.y)
-
     }
     pop()
 
@@ -512,7 +531,6 @@ class ParticleSystem{
       if (particle.isDead()) {
         const indexToRemove = this.pArray.indexOf(particle);
         this.pArray.splice(indexToRemove, 1);
-        console.log("SPLICE!")
         current = iterator.next();
       } else {
         current = iterator.next();
@@ -521,7 +539,6 @@ class ParticleSystem{
     for(let i = 0; i<swarmSize; i++){
       this.addParticle();
     } 
-    console.log(this.pArray.length)
   }
 
 }
@@ -586,9 +603,11 @@ function draw() {
   //Check to see if there is overlap. If so, move the food!
   let seekerToItemDist = PVector.getVDistance(foodItem.location, foodSeeker.location)
 
-  if(seekerToItemDist <= (foodItemMass + foodSeekerMass)/2){
+  if(seekerToItemDist <= (foodItem.mass + foodSeekerMass)/2){
     foodItem.resetPosition()
   }
+
+
 
   //Run Crawler Methods
   crawler.display();
@@ -621,6 +640,16 @@ function draw() {
 
   //Make the Swarm
   swarm.run(foodItem.location.x, foodItem.location.y);
+
+
+  for(let i = 0; i < swarm.pArray.length; i++){
+
+    if(foodItem.isTouching(swarm.pArray[i].location)){
+      foodItem.shrink();
+    }
+  }
+    //foodItem.shrink();
+    foodItem.isDead();
 }
 
 
