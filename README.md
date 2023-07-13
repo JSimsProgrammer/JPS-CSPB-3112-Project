@@ -49,6 +49,3 @@ Mitigation: I am working on a study/work plan for this project and class to make
 Project Assessments: I mentioned this above but no hard in repeating. My assessment for this project will be a culmination of adding in parts from each chapter I read until I have created a full, simple digital ecosystem! My goal is to incorporate what I have learned at least through chapter 6 of the Nature of Code textbook, and if I have time permitting I will continue to add to the project! 
 
 And there it is! That is my project proposal/summary! Going forward, I will  be focusing on weekly updates!
-
-
-## Week 1
