@@ -239,7 +239,7 @@ class FoodItem{
 
   shrink(){
     this.mass -= .01;
-    console.log(this.mass)
+    //console.log(this.mass)
   }
 
   isDead(){
@@ -650,6 +650,8 @@ function draw() {
   }
     //foodItem.shrink();
     foodItem.isDead();
+
+  console.log(swarm.pArray.length)
 }
 
 
