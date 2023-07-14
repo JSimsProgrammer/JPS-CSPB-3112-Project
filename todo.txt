@@ -1,0 +1,7 @@
+1. First I want to incorporate more of the oscilating bugs. Should be easy.
+2. Could I incorporate more of the other bugs. Make the canvas bigger and have much more going on?
+3. Possibly a different background. Black is a little boring.
+4. Do the spinning square for the wanderer.
+5. Think of something interesting for the food seeker.
+6. Make everything grow and shrink when they interact. 
+7. Maybe add some stationary  beings that eat the smaller particles.
