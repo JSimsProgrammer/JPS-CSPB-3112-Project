@@ -6,11 +6,16 @@ let sizeVar = 800; // Size of the canvas
 let timidCirclemass = 55
 let foodSeekerMass = 30 // Size of bouncing ball
 let foodItemMass = 50
+const maxBugLength = 200
+const maxBugSize = 50
 const fear = 8
 const topSpeed = 3.75
+const crawlerSpeed = 2
 const foodNeed = .75
 const flySpeed = 10
-swarmSize = 1
+const swarmSize = 1
+const numberOfBugs = 2
+
 
 /*
 ***************
@@ -33,7 +38,6 @@ function getMidpoint(x1, y1, x2, y2) {
   return result;
 }
 
-
 function getEqTriagleCoord(x, y, length) {
   let x2 = x + length;
   let y2 = y;
@@ -44,7 +48,6 @@ function getEqTriagleCoord(x, y, length) {
 
   return [x, y, x2, y2, x3, y3];
 }
-
 
 function rotateAroundPoint(xC, yC, xO, yO, angle) {
   let xN = (xO - xC) * Math.cos(angle) - (yO - yC) * Math.sin(angle) + xC;
@@ -335,9 +338,10 @@ class TimidCircle {
 
 
 class Crawler {
-  constructor(segments, segmentSize, angleX, aVelocityX, amplitudeX, angleY, aVelocityY, amplitudeY, xOffset, xSpeed, yOffset, ySpeed){
-    this.segments = segments;
-    this.segmentSize = segmentSize;
+  constructor(angleX, aVelocityX, amplitudeX, angleY, aVelocityY, amplitudeY){
+    this.length = getRandomInt(5, maxBugLength);
+    this.size = getRandomInt(15, maxBugSize);
+    this.distance = this.size/ getRandomInt(2, 8);
 
     this.angleX = angleX;
     this.aVelocityX = aVelocityX;
@@ -347,41 +351,76 @@ class Crawler {
     this.aVelocityY = aVelocityY;
     this.amplitudeY = amplitudeY;
 
-    this.location = new PVector(xOffset, yOffset)
-    this.velocity = new PVector(xSpeed, ySpeed)
+    this.location = new PVector(0, 0)
+    this.velocity = new PVector(0, 0)
     this.acceleration = new PVector(0,0);
-    
+
+    this.bodyColor = [getRandColorInt(), getRandColorInt(), getRandColorInt()]
+
+    this.location.x =  getRandomInt(-50, sizeVar + 50);
+    //If X is inside the canvas, Reset Y to be above or below. 
+    if(this.location.x < sizeVar && this.location.x > 0) {
+        let randInt = getRandomInt(1, 100);
+        if(randInt % 2  == 0) {
+          this.location.y = -50;
+        } else {
+          this.location.y = sizeVar + 50;
+        }
+      //Else, Y can be reset anywhere in defined boundaries
+      } else {
+        this.location.y =  getRandomInt(-50, sizeVar + 50);
+      }
+    //If X is on the left side of the canvas, make X speed positive. 
+    if(this.location.x < sizeVar/2) {
+      this.velocity.x = getRandomInt(1, crawlerSpeed);
+    //Else, make x speed negative.  
+    } else {
+      this.velocity.x = getRandomInt(-crawlerSpeed, -1);
+    }
+    //If Y is on the top of the cavas, make Yspeed positive. 
+    if(this.location.y < sizeVar/2){
+      this.velocity.y = getRandomInt(1, crawlerSpeed);
+      //Else, make Y speed negative. Use a range for thse values.
+    } else {
+      this.velocity.y = getRandomInt(-crawlerSpeed, -1);
+    }  
   } 
 
   display(){
     let angle = atan2(this.velocity.y, this.velocity.x)
     ellipseMode(CENTER);
     stroke(255);
-    fill(175);
+    console.log(this.bodyColor)
+    fill(this.bodyColor[0], this.bodyColor[1], this.bodyColor[2]);
     push()
     translate(this.location.x, this.location.y);
     rotate(angle)
-    for (let pos = -200; pos <= 0; pos += 15) {
+    for (let pos = -this.length - 10; pos <= -10; pos += this.distance) {
+      //let x = this.amplitudeX * cos(this.angleX + pos / 25);
       let x = this.amplitudeX * cos(this.angleX + pos / 25);
       let y = this.amplitudeY * sin(this.angleY + pos / 150);
       
       strokeWeight(1);
-      ellipse(pos, y - 15, 30, 30);
+      fill(this.bodyColor[0], this.bodyColor[1], this.bodyColor[2]);
+      //fill(this.location.y % 255, this.location.x % 255, Math.abs(this.location.x - this.location.y) % 255);
+      stroke(0);
+      ellipse(pos, y - (this.size/2), this.size, this.size);
       strokeWeight(3);
-      line(pos, y, pos + x, y + 30);
-      line(pos, y - 30, pos + x, y - 60);
+      //stroke(255)
+      stroke(this.bodyColor[2], this.bodyColor[1], this.bodyColor[0])
+      //stroke(this.location.x % 255, this.location.y % 255, (this.location.x + this.location.y) % 255);
+      line(pos, y, pos + x, y + this.size);
+      line(pos, y - this.size, pos + x, y - (this.size*2));
       
       this.angleY += this.aVelocityY;
+
     }
     pop()
-
-    //ellipse(this.location.x, this.location.y, 50, 50)
-
   }
 
   update(){
     this.velocity.add(this.acceleration)
-    this.velocity.limit(5);
+    this.velocity.limit(topSpeed);
     this.location.add(this.velocity)
 
     this.angleX += this.aVelocityX;
@@ -389,7 +428,7 @@ class Crawler {
 
   reset() {
     //If this is too far outside the canvas
-    if(this.location.x > width + 300 || this.location.x < -300|| this.location.y > height + 300 || this.location.y < -300) {
+    if(this.location.x > width + this.length || this.location.x < -this.length|| this.location.y > height + this.length || this.location.y < -this.length) {
       //Reset X to be a random value.
       this.location.x =  getRandomInt(-50, width + 50);
         //If X is inside the canvas, Reset Y to be above or below. 
@@ -398,26 +437,31 @@ class Crawler {
           if(randInt % 2  == 0) {
             this.location.y = -50;
           } else {
-            this.location.y = height + 50;
+            this.location.y = sizeVar + 50;
           }
         //Else, Y can be reset anywhere in defined boundaries
         } else {
-          this.location.y =  getRandomInt(-50, height + 50);
+          this.location.y =  getRandomInt(-50, sizeVar + 50);
         }
       //If X is on the left side of the canvas, make X speed positive. 
-      if(this.location.x < width/2) {
-        this.velocity.x = getRandomInt(1, 5);
+      if(this.location.x < sizeVar/2) {
+        this.velocity.x = getRandomInt(1, crawlerSpeed);
       //Else, make x speed negative.  
       } else {
-        this.velocity.x = getRandomInt(-5, -1);
+        this.velocity.x = getRandomInt(-crawlerSpeed, -1);
       }
       //If Y is on the top of the cavas, make Yspeed positive. 
-      if(this.location.y < height/2){
-        this.velocity.y = getRandomInt(1, 5);
+      if(this.location.y < sizeVar/2){
+        this.velocity.y = getRandomInt(1, crawlerSpeed);
         //Else, make Y speed negative. Use a range for thse values.
       } else {
-        this.velocity.y = getRandomInt(-5, -1);
+        this.velocity.y = getRandomInt(-crawlerSpeed, -1);
       }
+
+      this.bodyColor = [getRandColorInt(), getRandColorInt(), getRandColorInt()]
+      this.length = getRandomInt(5, maxBugLength);
+      this.size = getRandomInt(15, maxBugSize);
+      this.distance = this.size/ getRandomInt(2, 8);
     }
   }
 }
@@ -554,8 +598,16 @@ INSTANTIATION
 let timidCircle = new TimidCircle(sizeVar/2, sizeVar/2, timidCirclemass);
 let foodSeeker = new FoodSeeker(sizeVar/4, sizeVar/4, foodSeekerMass)
 let foodItem = new FoodItem(Math.floor(Math.random() * (sizeVar - 15)) + 15, Math.floor(Math.random() * (sizeVar - 15)) + 15, foodItemMass);
-let crawler = new Crawler(0, 0, 0, 0.1, 15, 0, .001, 150, 0, 1, 0, -1);
 let swarm = new ParticleSystem();
+
+let crawlerList = []
+
+//Instantiation
+for(let i = 0; i < numberOfBugs; i++) {
+  let crawler = new Crawler(0, 0.1, 15, 0, .001, 150);
+  crawlerList.push(crawler);
+
+}
 
 
 /*
@@ -579,6 +631,12 @@ DRAW
 
 function draw() {
   background(0); // Set the background color to black
+
+  for(let i = 0; i < crawlerList.length; i++) {
+    crawlerList[i].display();
+    crawlerList[i].update();
+    crawlerList[i].reset();
+  }
 
   // Update the timid circle's position
   if(counter % 5 == 0) {
@@ -612,9 +670,11 @@ function draw() {
 
 
   //Run Crawler Methods
-  crawler.display();
-  crawler.update();
-  crawler.reset();
+  for(let i = 0; i < crawlerList.length; i++) {
+    crawlerList[i].display();
+    crawlerList[i].update();
+    crawlerList[i].reset();
+  }
 
   // Attract the food seeker to the food
   foodSeeker.goToFood(foodItem);
