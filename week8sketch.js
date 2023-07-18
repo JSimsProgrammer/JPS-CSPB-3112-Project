@@ -2,7 +2,7 @@
 let counter = 0; // Counter for draw function
 let circleSpeed = 3; //speed of the timid cirlce
 let maxSpeed = 7; //max speed of the bouncing circle
-let sizeVar = 800; // Size of the canvas
+let sizeVar = 1200; // Size of the canvas
 let timidCirclemass = 55
 let foodSeekerMass = 30 // Size of bouncing ball
 let foodItemMass = 50
@@ -14,7 +14,7 @@ const crawlerSpeed = 2
 const foodNeed = .75
 const flySpeed = 10
 const swarmSize = 1
-const numberOfBugs = 2
+const numberOfBugs = 3
 
 
 /*
@@ -76,6 +76,16 @@ function getRandomInt(min, max) {
 
 function getRandColorInt() {
   return Math.floor(Math.random() * 256);
+}
+
+function colorMod(x) {
+  var normalized = x % 510; // Get the value in the range of 0 to 509
+
+  if (normalized > 255) {
+    normalized = 510 - normalized; // Map values above 255 back to the range of 0 to 255
+  }
+
+  return normalized;
 }
 
 /*
@@ -242,7 +252,6 @@ class FoodItem{
 
   shrink(){
     this.mass -= .01;
-    //console.log(this.mass)
   }
 
   isDead(){
@@ -271,6 +280,9 @@ class TimidCircle {
     this.targetX = x_; // Target x position for lerping
     this.targetY = y_; // Target y position for lerping
     this.mass = mass; // Set the mass (aka size) of the circle
+    this.angle = 0;
+    this.angleVel = .02;
+    this.amplitudeX =25;
   }
 
   // Add noise to the x position
@@ -295,6 +307,27 @@ class TimidCircle {
   subYNoise(){
     this.yNoiseVar -= noise(random(25, 50));
     this.targetY -= map(this.yNoiseVar, 0, 20, -circleSpeed, circleSpeed);
+  }
+
+  display() {
+    push();
+
+    translate(this.location.x, this.location.y); // Translate to the center of the square
+    rotate(this.angle);
+    this.angle += this.angleVel;
+    stroke(colorMod(this.angle), colorMod(this.location.x), colorMod(this.location.y)); // Set the stroke color to white
+    fill(colorMod(this.location.y), colorMod(this.location.x), colorMod(this.location.y - this.location.x)); // Make the color green
+    rect(0, 0, this.mass, this.mass);
+    for(let i = this.mass +this.mass * .1; i -= this.mass * .1; i > 0) {
+      let x = this.amplitudeX * cos(this.angle*2 + i / 25);
+      line(0, 0 + i , 0-15, 0 + i - 15 + x) // Left Side
+      line(0 + i, 0, 0 + i + 15 + x, 0 - 15) // Top Side
+      line(0 + this.mass, 0 + i, (0 + this.mass) + 15, (0 + this.mass/2) + i - 15-x) // Right Side
+      line(0 + i, 0 + this.mass, 0 + i - 15-x, 0 + this.mass  + 15) // Bottom Side
+    }
+    fill(colorMod(this.location.x), colorMod(this.location.y), colorMod(this.location.y + this.location.x)); // Make the color green
+    ellipse(0+this.mass/2, 0+this.mass/2, this.mass, this.mass)
+    pop()
   }
 
   // Update the circle's position using lerping
@@ -334,6 +367,8 @@ class TimidCircle {
     force.multi(-1)
     return force;
   }
+
+
 }
 
 
@@ -390,7 +425,6 @@ class Crawler {
     let angle = atan2(this.velocity.y, this.velocity.x)
     ellipseMode(CENTER);
     stroke(255);
-    console.log(this.bodyColor)
     fill(this.bodyColor[0], this.bodyColor[1], this.bodyColor[2]);
     push()
     translate(this.location.x, this.location.y);
@@ -687,10 +721,7 @@ function draw() {
   foodSeeker.update()
 
   // Draw the timid circle
-  stroke(255); // Set the stroke color to white
-  fill(34, 139, 34); // Make the color green
-  ellipse(timidCircle.location.x, timidCircle.location.y, timidCircle.mass, timidCircle.mass); // Draw an ellipse at the current location with a diameter of 30 pixels
-
+  timidCircle.display();
 
   //Draw the food seeker
   fill(0, 0, 255); // Make the color blue
@@ -713,7 +744,6 @@ function draw() {
     //foodItem.shrink();
     foodItem.isDead();
 
-  console.log(swarm.pArray.length)
 }
 
 
