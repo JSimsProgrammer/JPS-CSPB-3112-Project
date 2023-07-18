@@ -5,3 +5,4 @@
 5. Think of something interesting for the food seeker.
 6. Make everything grow and shrink when they interact. 
 7. Maybe add some stationary  beings that eat the smaller particles.
+8. Organize files for github into weeks

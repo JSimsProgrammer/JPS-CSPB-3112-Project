@@ -565,7 +565,9 @@ SETUP
 */
 
 function setup() {
-  createCanvas(sizeVar, sizeVar); // Create a canvas with a width and height of 400 pixels
+  createCanvas(sizeVar, sizeVar);
+  background(0); // Set the background color to black
+
 }
 
 
