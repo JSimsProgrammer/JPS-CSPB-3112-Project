@@ -234,6 +234,18 @@ class FoodSeeker{
     this.acceleration = force;
   }
 
+  display() {
+    let angle = atan2(this.velocity.y, this.velocity.x)
+    stroke(100)
+    fill(0, 0, 255); // Make the color blue
+    push();
+    rectMode(CENTER);
+    translate(this.location.x, this.location.y);
+    rotate(angle+5);
+    let coord = getEqTriagleCoord(0, 0, this.mass)
+    triangle(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5])
+    pop();
+  }
   
 }
 
@@ -724,8 +736,7 @@ function draw() {
   timidCircle.display();
 
   //Draw the food seeker
-  fill(0, 0, 255); // Make the color blue
-  ellipse(foodSeeker.location.x, foodSeeker.location.y, foodSeeker.mass, foodSeeker.mass);
+  foodSeeker.display()
 
   //Draw the food item
   fill(255, 0, 255);
