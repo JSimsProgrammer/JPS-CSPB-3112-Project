@@ -216,12 +216,15 @@ class FoodSeeker{
     this.velocity = new PVector(0,0);
     this.acceleration = new PVector(0,0);
     this.mass = mass; // Set the mass (aka size) of the circle
+    this.counter = 0
+    this.triangleList = []
   }
 
   update(){
     this.velocity.add(this.acceleration)
     this.velocity.limit(topSpeed);
     this.location.add(this.velocity)
+    this.counter += 1
   }
   applyForce(force){
     this.acceleration.add(force)
@@ -236,6 +239,8 @@ class FoodSeeker{
 
   display() {
     let angle = atan2(this.velocity.y, this.velocity.x)
+    this.addToList(angle, this.location)
+    this.displayList();
     stroke(100)
     fill(0, 0, 255); // Make the color blue
     push();
@@ -246,7 +251,31 @@ class FoodSeeker{
     triangle(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5])
     pop();
   }
-  
+
+  addToList(angle, location){
+    if(this.counter%2 == 0){
+      let loc = new PVector(location.x, location.y); // Create a new PVector object with the coordinates
+      this.triangleList.push([angle, loc])
+      if(this.triangleList.length > 40){
+        this.triangleList.shift();
+      }
+    }
+  }
+
+  displayList(){
+    for(var i = 0; i < this.triangleList.length; i++){
+      stroke(100)
+      fill(0, 0, 255); // Make the color blue
+      push();
+      rectMode(CENTER);
+      translate(this.triangleList[i][1].x, this.triangleList[i][1].y);
+      console.log(this.triangleList[i][1].x)
+      rotate(this.triangleList[i][0]+5);
+      let coord = getEqTriagleCoord(0, 0, this.mass)
+      triangle(coord[0], coord[1], coord[2], coord[3], coord[4], coord[5])
+      pop();
+    }
+  }
 }
 
 // Food Class
@@ -709,7 +738,7 @@ function draw() {
   //Check to see if there is overlap. If so, move the food!
   let seekerToItemDist = PVector.getVDistance(foodItem.location, foodSeeker.location)
 
-  if(seekerToItemDist <= (foodItem.mass + foodSeekerMass)/2){
+  if(seekerToItemDist <= ((foodItem.mass + foodSeekerMass)/2)+8){
     foodItem.resetPosition()
   }
 
