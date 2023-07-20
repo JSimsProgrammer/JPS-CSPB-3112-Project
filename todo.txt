@@ -5,5 +5,5 @@
 5. Think of something interesting for the food seeker. - DONE
 6. Make everything grow and shrink when they interact. 
 7. Maybe add some stationary  beings that eat the smaller particles.
-8. Organize files for github into weeks
+8. Organize files for github into weeks - DONE
 9. Fix the timid seekers "going out of control" problem
