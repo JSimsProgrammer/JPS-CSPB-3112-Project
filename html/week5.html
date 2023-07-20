@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Week 6</title>
+        <title>Week 5</title>
         <style>
             body {
                 background-color: #4B0082;
@@ -61,7 +61,7 @@
     <body>
     
     	<nav>
-            <a href="index.html">Introduction</a>
+            <a href="../index.html">Introduction</a>
             <a href="week1.html">Week 1</a>
             <a href="week2.html">Week 2</a>
             <a href="week3.html">Week 3</a>
@@ -82,27 +82,16 @@
         <div id="header">Nature of Code - Learning Processing and p5.js</div>
          <div id="header2">CSPB 3112 Project by Jordan Sims</div>
         <div id="PageHeader">
-            <h2>Week 6</h2>
+            <h2>Week 5</h2>
         </div>
 
         <div id="PageText">
             <h3>Key Takeaways</h3>
 
             <p>
-            This week I completed reading Chapter 4 of The Nature of Code about partcile systems. I also had enough time this week to not only read the chapter, but I was
-            also able to implement what I have learned into my project below! But, before we get to that, let's review what I learned this week:
+            This week I will take what I learned in Week 4 about oscillation and movement and apply them to my project!
             </p>
 
-            <ul>
-                <li>What is a Particle System</li>
-                <li>Creating a Particles</li>
-                <li>Particles and Arrays</li>
-                <li>Creating a Particle System</li>
-                <li>System of Systems</li>
-                <li>Inheritance</li>
-                <li>Polymorphism</li>
-                <li>Systems Affected by Forces</li>
-            </ul>
             
             <h3>Project Update</h3>
             
@@ -112,21 +101,24 @@
 
             <p>
                 <i>
-                    Take your creature from Step 3 and build a system of creatures. How can they interact with each other? Can you use inheritance and polymorphism to create a variety of 
-                    creatures, derived from the same code base? Develop a methodology for how they compete for resources (for example, food). Can you track a creature’s “health” much like
-                    we tracked a particle’s lifespan, removing creatures when appropriate? What rules can you incorporate to control how creatures are born? 
-
-                    (Also, you might consider using a particle system itself in the design of a creature. What happens if your emitter is tied to the creature’s location?)
+                Take one of your creatures and incorporate oscillation into its motion. You can use the Oscillator class from Example 3.7 as a model. 
+                The Oscillator object, however, oscillates around a single point (the middle of the window). Try oscillating around a moving point. 
+                In other words, design a creature that moves around the screen according to location, velocity, and acceleration. But that creature 
+                isn’t just a static shape, it’s an oscillating body. Consider tying the speed of oscillation to the speed of motion. Think of a 
+                butterfly’s flapping wings or the legs of an insect. Can you make it appear that the creature’s internal mechanics (oscillation) 
+                drive its locomotion?
                 </i>
             </p>
 
             <p>
-                I used this week's prompt as inspiration, but did not follow it exactly. Instead of taking my creature from last week and incorporating a partilce system into it, I created a "swarm"
-                of creatures that use what I learned about particle systems this week. This swarm is after the food that the blue creature is after as well. If he is not fast enough, the swarm will eat 
-                up the food, and he will have to start looking somewhere else. Of course, that food is also going to be attacked by the swarm!  
+                I am really happy with what I made this week, and have even in my own time been cooking up ways to make it even better. But those are coming
+                in future weeks. For now, let's talk about what I added. Instead of doing the suggestion and taking one of my creatures and making it into an
+                oscillating creature, I wanted to add a whole new creature for a diverse environment! You can see them pretty easily, running around the canvas. 
+                This creature looks, to my eye, incredibly natural and at home in this little microbial world I am creating! As I said, I have more plans for him
+                and his kind coming up in future updates, but for now, enjoy his simplicitiy and natural movement!
             </p>
 
-            <script src="week6sketch.js"></script>
+            <script src="../sketches/week5sketch.js"></script>
 
            
         </div>
