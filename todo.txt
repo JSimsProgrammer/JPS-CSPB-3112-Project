@@ -2,7 +2,7 @@
 2. Could I incorporate more of the other bugs. Make the canvas bigger and have much more going on?
 3. Possibly a different background. Black is a little boring.
 4. Do the spinning square for the wanderer. - Done
-5. Think of something interesting for the food seeker.
+5. Think of something interesting for the food seeker. - DONE
 6. Make everything grow and shrink when they interact. 
 7. Maybe add some stationary  beings that eat the smaller particles.
 8. Organize files for github into weeks
