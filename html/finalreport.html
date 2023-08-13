@@ -48,7 +48,15 @@
                 margin-right: 15px;
                 text-decoration: none;
             }
+
+            canvas {
+                display: block;
+                 margin: auto;
+            }       
         </style>
+
+        <script src="libraries/p5.min.js"></script>
+
     </head>
     <body>
     
@@ -71,14 +79,45 @@
         <div id="header">Nature of Code - Learning Processing and p5.js</div>
          <div id="header2">CSPB 3112 Project by Jordan Sims</div>
         <div id="PageHeader">
-            <h2>This Page Is Not Done Yet!</h2>
+            <h2>Final Report</h2>
         </div>
 
         <div id="PageText">
             <p>
-                Looking ahead are we? I don't blame you, wanting more. But unfortunately, this page is not made yet. Guess you will have to be patient. But don't worry,
-                good things are coming! :)
+                So we are here now, at the end of the semester and at the end of this project. It has been a pretty cool ride! I have learned so much about so many different things, and am proud
+                of where my ecosystem project has landed. To see that progress, I implore you to start by looking back at the beginning with my first canvas sketch (I tried to add it here, but
+                apparently you cannot have two p5.js sketches on the same HTML page. Looks like I am still learning new things even as I write my final report!). It's safe to say that this is a 
+                pretty rudimentary sketch. We simply have two circles floating around the screen. This week I was mostly just learning p5.js and JavaScript in general. I had also learned about 
+                Perlin noise, which is the algorithm applied for the movement of the green circle.
             </p>
+
+
+            <p>
+                Now, let’s take a look at the final result, which I have posted under my final report. There is a much larger amound of things going on, and the realtionships are far more complex.
+                There are oscilating bugs that fly across the screen using sine and cosine waves. Those change size, length, and even color! In fact, everything is different colors, or changes colors. There is a blue triangle creature
+                that swims across the canvas, seeking the pink food. But he must be quick, for the white insectoid gnats or flies are flocking and eating the food constantly. Our Perlin 
+                noise green circle from the first canvas? It is now a different creature all together, with sine and cosine cilia, and is constantly changing color. Can you tell what
+                dictates this color change? It is a formula based on its location of the map. If you look closely, you can also see that while the blue triangle creature seeks the food,
+                he is afraid of this strange, color changing creature that moves so randomly, and thus does what he can to avoid it! 
+            </p>
+
+            <p>
+                I learned so many cool things in this developing this project and working through the first six chapters of the Nature of Code book. I do not plan to stop with this project either.
+                I am planning on finishing reading the rest of the Nature of Code and completing my Ecosystem project (beyond the scope of this class), and also have bought two more books that the author
+                recommends that analyze natural and adaptive systems. For the curious, those books are Turtles, Termites, and Traffic Jams: Explorations in Massively Parallel Microworlds by Mitchel Resnick and 
+                Complex Adaptive Systems: An Introduction to Computational Models of Social Life. I am very excited to crack into those and learn all they have to offer! 
+            </p>
+
+            <p>
+                I am proud of how this project has turned out and am greatly looking forward to continuing to learn about natural and adaptive systems through code! If you feel so inclined, by all means, just hang out for
+                a minute or two and watch the world below live and breath! :)
+            </p>
+        <div>
+            <script src="../sketches/week11sketch.js"></script>
+        </div>
+
+        <p>
+        </p>
 
         </div>
     </body>
